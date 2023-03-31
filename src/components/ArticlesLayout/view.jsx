@@ -1,17 +1,38 @@
 import React, { useState } from 'react'
 import { ArticleCardSkeleton } from '../ArticleCardSkeleton'
 import { get } from 'lodash'
+import Typewriter from 'typewriter-effect';
 import { Container } from '../Container'
 
 import { SearchNew } from '../SearchNew'
 
+const getDomain = (url, subdomain = null) => {
+  subdomain = subdomain || false;
 
+  url = url.replace(/(https?:\/\/)?(www.)?/i, '');
+
+  if (!subdomain) {
+    url = url.split('.');
+
+    url = url.slice(url.length - 2).join('.');
+  }
+
+  if (url.indexOf('/') !== -1) {
+    return url.split('/')[0];
+  }
+
+  return url;
+}
 export function View({
+  items,
   loading_node,
   setSkillId,
   skillId,
   articleCount,
   SkillName,
+  nodeId,
+  setNodeId,
+  nodeContent
 }) {
   const [show, setShow] = useState(true)
   return (
@@ -40,57 +61,25 @@ export function View({
           </span>
         </h1>
         <p className="mx-auto mt-6 mb-10 max-w-4xl text-2xl  text-slate-700 dark:text-slate-400">
-          Companies landing pages are complex to navigate and full of glassy CSS. To reduce noise we {' '} 
+          Companies landing pages are complex to navigate and full of glassy CSS. To reduce noise we {' '}
           <span className="font-bold text-black dark:text-white">
-          analyse companies landing pages 
+            analyse companies landing pages
           </span>{' '}
           so you can  <span className="font-bold text-black dark:text-white">find quickly relevant textual content </span> with less noise!
         </p>
 
-        {/* <Transition
-          show={skillId == ''}
-          enter="transition-opacity duration-75"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="transition-opacity duration-150"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <ul
-            role="list"
-            className="  my-4 flex flex-col items-center justify-center gap-20  text-left lg:flex-row "
-          >
-            {staticTrends.map((skill) => (
-              <div key={skill['id']}>
-                <TrendChart
-                  skillName={skill['name']}
-                  skillTs={skill['trend']}
-                />
-              </div>
-            ))}
-          </ul>
-        </Transition> */}
-        {/* {skillId == '' &&
-            staticTrends.map((skill) => (
-              <div key={skill['id']}>
-                <TrendChart
-                  skillName={skill['name']}
-                  skillTs={skill['trend']}
-                />
-              </div>
-            ))} */}
 
         <div className=" z-10 mt-10 flex justify-center gap-x-6">
           <SearchNew setSkillId={setSkillId} skillId={skillId} />
         </div>
         {articleCount != 0 && (
           <p className="mt-10 text-2xl ">
-            {articleCount} {articleCount == 1 ? 'Article' : 'Articles'} found
-            about <span className="font-bold">{SkillName}</span>
+            {articleCount} relevant {articleCount == 1 ? 'Item' : 'Items'} found
+            for <span className="font-bold">{getDomain(skillId)}</span>
           </p>
         )}
         {loading_node ? (
-          <div className="mt-10 flex items-center justify-center ">
+          <div className=" mt-10  flex items-center justify-center ">
             <ul
               role="list"
               className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 text-left sm:gap-8 lg:mt-20 lg:max-w-none lg:grid-cols-3"
@@ -113,11 +102,46 @@ export function View({
         ) : (
           <ul
             role="list"
-            className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 text-left sm:gap-8 lg:mt-20 lg:max-w-none lg:grid-cols-3"
+            className=" mt-5 "
           >
-           {skillId}
+            {items.map(item =>
+              <span
+                onClick={() => setNodeId(item.id)}
+
+                className={`transform hover:scale-105 ease-in-out  duration-100 cursor-pointer m-1 text-xl  font-bold inline-flex items-center rounded-full ${item.id == nodeId ? "bg-white text-yellow-700" : "bg-yellow-700 text-white "} px-4 py-0.5 `}
+              >
+                {item.label}
+              </span>)}
           </ul>
         )}
+
+        {nodeContent.length != 0 && <div className=" mt-10  flex flex-col  justify-center ">
+          {nodeContent.map(card => <div className="relative lg:order-last lg:col-span-5 mt-5">
+            <svg
+              className="absolute -top-[40rem] left-1 -z-10 h-[64rem] w-[175.5rem] -translate-x-1/2 stroke-gray-900/10 [mask-image:radial-gradient(64rem_64rem_at_111.5rem_0%,white,transparent)]"
+              aria-hidden="true"
+            >
+              <defs>
+                <pattern
+                  id="e87443c8-56e4-4c20-9111-55b82fa704e3"
+                  width={200}
+                  height={200}
+                  patternUnits="userSpaceOnUse"
+                >
+                  <path d="M0.5 0V200M200 0.5L0 0.499983" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" strokeWidth={0} fill="url(#e87443c8-56e4-4c20-9111-55b82fa704e3)" />
+            </svg>
+            <figure className="border-l border-indigo-600 pl-8">
+              <blockquote className="text-xl font-semibold leading-8 tracking-tight  text-left">
+                {card.map(row => <p>{row}</p>)}
+              </blockquote>
+
+            </figure>
+          </div>)}
+
+        </div>}
       </Container>
     </section>
   )
