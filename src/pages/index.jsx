@@ -29,10 +29,10 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col  justify-between bg-slate-50 dark:bg-slate-800 ">
       <Head>
-        <title>TechSignal - find what to read fast</title>
+        <title>Ask a landing page</title>
         <meta
           name="description"
-          content="find relevant tech articles published by bg tech companies by searching for skills or tools.  "
+          content="find relevant parts in a company website.  "
         />
       </Head>
       <Header />
