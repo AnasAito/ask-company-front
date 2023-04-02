@@ -116,29 +116,12 @@ export function View({
         )}
 
         {nodeContent.length != 0 && <div className=" mt-10  flex flex-col  justify-center ">
-          {nodeContent.map(card => <div className="relative lg:order-last lg:col-span-5 mt-5">
-            <svg
-              className="absolute -top-[40rem] left-1 -z-10 h-[64rem] w-[175.5rem] -translate-x-1/2 stroke-gray-900/10 [mask-image:radial-gradient(64rem_64rem_at_111.5rem_0%,white,transparent)]"
-              aria-hidden="true"
-            >
-              <defs>
-                <pattern
-                  id="e87443c8-56e4-4c20-9111-55b82fa704e3"
-                  width={200}
-                  height={200}
-                  patternUnits="userSpaceOnUse"
-                >
-                  <path d="M0.5 0V200M200 0.5L0 0.499983" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" strokeWidth={0} fill="url(#e87443c8-56e4-4c20-9111-55b82fa704e3)" />
-            </svg>
-            <figure className="border-l border-indigo-600 pl-8">
-              <blockquote className="text-xl font-semibold leading-8 tracking-tight  text-left">
-                {card.map(row => <p>{row}</p>)}
-              </blockquote>
+          {nodeContent.map(card => <div className="relative lg:order-last text-left lg:col-span-5 mt-5">
+            {card['type'] == 'link' && <div>
 
-            </figure>
+              {card['text'].map(text => <p>{text}</p>)}
+              {card['href']}</div>}
+            {card['type'] == 'text' && <div>{card['text']}</div>}
           </div>)}
 
         </div>}
