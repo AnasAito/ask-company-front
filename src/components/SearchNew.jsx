@@ -21,11 +21,8 @@ export function SearchNew({ setSkillId, skillId }) {
 
   const [open, setOpen] = useState(false)
 
-
-  
-
   return (
-    <div className=" mx-auto py-1 w-full transform divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-xl bg-white text-left shadow-2xl ring-4 ring-yellow-600 ring-opacity-50   dark:divide-slate-900 dark:bg-slate-900   lg:w-3/4">
+    <div className=" mx-auto w-full transform divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-xl bg-white py-1 text-left shadow-2xl ring-4 ring-yellow-600 ring-opacity-50   dark:divide-slate-900 dark:bg-slate-900   lg:w-3/4">
       <Combobox onChange={(item) => (window.location = item.url)}>
         <div className="relative">
           <MagnifyingGlassIcon
@@ -37,9 +34,13 @@ export function SearchNew({ setSkillId, skillId }) {
             placeholder="Tap a company homepage url ..."
             onChange={(event) => setQuery(event.target.value)}
           />
-      <button  onClick={() => setSkillId(query)} class="text-white absolute  top-1 right-4 bg-blue-700 hover:bg-blue-800  focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">Search</button>
+          <button
+            onClick={() => setSkillId(query)}
+            class="absolute top-1  right-4 rounded-lg bg-yellow-700 px-4  py-2 text-sm font-medium text-white hover:bg-yellow-800 focus:outline-none focus:ring-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
+          >
+            Search
+          </button>
         </div>
-     
       </Combobox>
     </div>
   )

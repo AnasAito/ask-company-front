@@ -1,27 +1,27 @@
 import React, { useState } from 'react'
 import { ArticleCardSkeleton } from '../ArticleCardSkeleton'
 import { get } from 'lodash'
-import Typewriter from 'typewriter-effect';
+import Typewriter from 'typewriter-effect'
 import { Container } from '../Container'
-
+import { NodeCard } from '../NodeCard'
 import { SearchNew } from '../SearchNew'
 
 const getDomain = (url, subdomain = null) => {
-  subdomain = subdomain || false;
+  subdomain = subdomain || false
 
-  url = url.replace(/(https?:\/\/)?(www.)?/i, '');
+  url = url.replace(/(https?:\/\/)?(www.)?/i, '')
 
   if (!subdomain) {
-    url = url.split('.');
+    url = url.split('.')
 
-    url = url.slice(url.length - 2).join('.');
+    url = url.slice(url.length - 2).join('.')
   }
 
   if (url.indexOf('/') !== -1) {
-    return url.split('/')[0];
+    return url.split('/')[0]
   }
 
-  return url;
+  return url
 }
 export function View({
   items,
@@ -32,9 +32,9 @@ export function View({
   SkillName,
   nodeId,
   setNodeId,
-  nodeContent
+  nodeContent,
 }) {
-  const [show, setShow] = useState(true)
+  const [show, setShow] = useState(false)
   return (
     <section
       // id="testimonials"
@@ -47,7 +47,7 @@ export function View({
           onClick={() => setSkillId('')}
           className=" mx-auto max-w-4xl cursor-pointer font-display text-5xl font-medium tracking-tight   sm:text-7xl"
         >
-          Relevant{' '}
+          Structured{' '}
           <span className="relative whitespace-nowrap text-yellow-600">
             <svg
               aria-hidden="true"
@@ -60,14 +60,51 @@ export function View({
             <span className="relative">Web</span>
           </span>
         </h1>
-        <p className="mx-auto mt-6 mb-10 max-w-4xl text-2xl  text-slate-700 dark:text-slate-400">
-          Companies landing pages are complex to navigate and full of glassy CSS. To reduce noise we {' '}
+        <p className="mx-auto mt-6 mb-2 max-w-4xl text-2xl  text-slate-700 dark:text-slate-400">
+          Companies landing pages are complex to navigate and full of glassy
+          CSS.{' '}
           <span className="font-bold text-black dark:text-white">
-            analyse companies landing pages
+            Unfortunaly there is no one template to structure their textual
+            data.
           </span>{' '}
-          so you can  <span className="font-bold text-black dark:text-white">find quickly relevant textual content </span> with less noise!
+          this is why we tend to scrap evrything and make sense of it after
+          using complex nlp algorithms.{'  '}
+          {!show && (
+            <span
+              onClick={() => setShow(!show)}
+              className="cursor-pointer font-bold text-yellow-500 underline"
+            >
+              Read more ...
+            </span>
+          )}
         </p>
-
+        {show && (
+          <>
+            <p className="mx-auto mt-1 mb-2 max-w-4xl text-2xl  text-slate-700 dark:text-slate-400">
+              But wait! why does it look structured and organized when we look
+              at it ? This is because of the HTML layout that give textual data
+              a struture. Given this asumption i developped a simple algorthl
+              that process a give hopelage html cleans it from irrelavant
+              elements and transform it into graph. doing so we can identify
+              relevant elements using graph centralities and cluster related
+              items.{' '}
+            </p>
+            <p className="mx-auto mt-1 mb-2 max-w-4xl text-2xl  text-slate-700 dark:text-slate-400">
+              Doing so, textual snippets are linked to their title, links also
+              linked to theri scope and more ... Moreover we push this idea to
+              utilise not only the graph but also rich objects found in links
+              head to enrich internal links with usefull metadata.{' '}
+              {show && (
+                <span
+                  onClick={() => setShow(!show)}
+                  className="cursor-pointer font-bold text-yellow-500 underline"
+                >
+                  Read less ...
+                </span>
+              )}
+            </p>
+          </>
+        )}
 
         <div className=" z-10 mt-10 flex justify-center gap-x-6">
           <SearchNew setSkillId={setSkillId} skillId={skillId} />
@@ -100,31 +137,30 @@ export function View({
             </ul>
           </div>
         ) : (
-          <ul
-            role="list"
-            className=" mt-5 "
-          >
-            {items.map(item =>
-              <span
-                onClick={() => setNodeId(item.id)}
-
-                className={`transform hover:scale-105 ease-in-out  duration-100 cursor-pointer m-1 text-xl  font-bold inline-flex items-center rounded-full ${item.id == nodeId ? "bg-white text-yellow-700" : "bg-yellow-700 text-white "} px-4 py-0.5 `}
-              >
-                {item.label}
-              </span>)}
+          <ul role="list" className=" mt-5 ">
+            {items.map((item) => {
+              if (item.label.length > 3) {
+                return (
+                  <span
+                    onClick={() => setNodeId(item.id)}
+                    className={`m-1 inline-flex transform  cursor-pointer items-center rounded-full text-xl  font-bold duration-100 ease-in-out hover:scale-105 ${
+                      item.id == nodeId
+                        ? 'bg-white text-yellow-700'
+                        : 'bg-yellow-700 text-white '
+                    } px-4 py-0.5 `}
+                  >
+                    {item.label}
+                  </span>
+                )
+              }
+            })}
           </ul>
         )}
-
-        {nodeContent.length != 0 && <div className=" mt-10  flex flex-col  justify-center ">
-          {nodeContent.map(card => <div className="relative lg:order-last text-left lg:col-span-5 mt-5">
-            {card['type'] == 'link' && <div>
-
-              {card['text'].map(text => <p>{text}</p>)}
-              {card['href']}</div>}
-            {card['type'] == 'text' && <div>{card['text']}</div>}
-          </div>)}
-
-        </div>}
+        <div className="mt-10">
+          {nodeContent.length != 0 && (
+            <NodeCard nodeContent={nodeContent} key={1} />
+          )}
+        </div>
       </Container>
     </section>
   )

@@ -78,12 +78,16 @@ function MobileNavigation() {
         >
           <Popover.Panel
             as="div"
-            className="absolute inset-x-0 top-full mt-4 flex origin-top flex-col rounded-2xl bg-white  dark:bg-slate-900 p-4 text-lg tracking-tight text-slate-900 dark:text-white shadow-xl ring-1 ring-slate-900/5"
+            className="absolute inset-x-0 top-full mt-4 flex origin-top flex-col rounded-2xl bg-white  p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5 dark:bg-slate-900 dark:text-white"
           >
             <MobileNavLink href="/about">About</MobileNavLink>
             <MobileNavLink href="/stats">Stats</MobileNavLink>
-            <span className='bg-slate-800 dark:bg-white dark:text-slate-900 text-white rounded-md'>  <MobileNavLink  href ='' ><ModeToggleMobile/></MobileNavLink></span>
-          
+            <span className="rounded-md bg-slate-800 text-white dark:bg-white dark:text-slate-900">
+              {' '}
+              <MobileNavLink href="">
+                <ModeToggleMobile />
+              </MobileNavLink>
+            </span>
           </Popover.Panel>
         </Transition.Child>
       </Transition.Root>
@@ -93,7 +97,7 @@ function MobileNavigation() {
 
 export function Header() {
   return (
-    <header className="bg-slate-50 dark:bg-slate-800 text-white dark:text-white py-4 font-mono">
+    <header className="bg-slate-50 py-4 font-mono text-white dark:bg-slate-800 dark:text-white">
       <Container>
         <nav className="relative z-50 flex justify-between">
           <div className="flex items-center md:gap-x-12">
@@ -102,7 +106,7 @@ export function Header() {
             </Link>
             <div className="hidden md:flex md:gap-x-6 ">
               <NavLink href="/about">About</NavLink>
-              <NavLink href="/stats">Stats</NavLink>
+              {/* <NavLink href="/stats">Stats</NavLink> */}
             </div>
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
@@ -117,8 +121,10 @@ export function Header() {
                 <span className="inline"> Sponsor me!</span>
               </span>
             </Button>
-            <div className='hidden lg:inline'><ModeToggle/></div>
-            
+            <div className="hidden lg:inline">
+              <ModeToggle />
+            </div>
+
             <div className="-mr-1 md:hidden">
               <MobileNavigation />
             </div>
