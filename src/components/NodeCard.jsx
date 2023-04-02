@@ -17,13 +17,13 @@ const enrich = (page_url) => {
 }
 
 const TextTitle = () => (
-  <div class=" super text-super selection:bg-super mb-3  flex items-center space-x-[11px] font-sans text-base selection:bg-opacity-70 selection:text-white dark:selection:bg-opacity-50">
+  <div className=" super text-super selection:bg-super mb-3  flex items-center space-x-[11px] font-sans text-base selection:bg-opacity-70 selection:text-white dark:selection:bg-opacity-50">
     <svg
       aria-hidden="true"
       focusable="false"
       data-prefix="fass"
       data-icon="arrow-down-right"
-      class=" w-4  text-yellow-500 "
+      className=" w-4  text-yellow-500 "
       role="img"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 384 512"
@@ -33,19 +33,19 @@ const TextTitle = () => (
         d="M302 416h32V384 160 128H270v32V306.7L68.6 105.4 46 82.7 .7 128l22.6 22.6L224.7 352H78 46v64H78 302z"
       ></path>
     </svg>
-    <div class="super text-super selection:bg-super font-mono text-xs font-bold uppercase leading-none tracking-widest selection:bg-opacity-70 selection:text-white dark:selection:bg-opacity-50">
+    <div className="super text-super selection:bg-super font-mono text-xs font-bold uppercase leading-none tracking-widest selection:bg-opacity-70 selection:text-white dark:selection:bg-opacity-50">
       Result
     </div>
   </div>
 )
 const ResTitle = ({ count }) => (
-  <div class=" super text-super selection:bg-super mb-3  flex items-center space-x-[11px] font-sans text-base selection:bg-opacity-70 selection:text-white dark:selection:bg-opacity-50">
+  <div className=" super text-super selection:bg-super mb-3  flex items-center space-x-[11px] font-sans text-base selection:bg-opacity-70 selection:text-white dark:selection:bg-opacity-50">
     <svg
       aria-hidden="true"
       focusable="false"
       data-prefix="fass"
       data-icon="brackets-square"
-      class=" w-4  text-yellow-500 "
+      className=" w-4  text-yellow-500 "
       role="img"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 448 512"
@@ -55,7 +55,7 @@ const ResTitle = ({ count }) => (
         d="M416 32h32V64 448v32H416 320 288V416h32 64V96H320 288V32h32 96zM32 32h96 32V96H128 64V416h64 32v64H128 32 0V448 64 32H32z"
       ></path>
     </svg>
-    <div class="super text-super selection:bg-super font-mono text-xs font-bold uppercase leading-none tracking-widest selection:bg-opacity-70 selection:text-white dark:selection:bg-opacity-50">
+    <div className="super text-super selection:bg-super font-mono text-xs font-bold uppercase leading-none tracking-widest selection:bg-opacity-70 selection:text-white dark:selection:bg-opacity-50">
       {count} Sources
     </div>
   </div>

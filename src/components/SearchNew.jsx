@@ -36,7 +36,7 @@ export function SearchNew({ setSkillId, skillId }) {
           />
           <button
             onClick={() => setSkillId(query)}
-            class="absolute top-1  right-4 rounded-lg bg-yellow-700 px-4  py-2 text-sm font-medium text-white hover:bg-yellow-800 focus:outline-none focus:ring-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
+            className="absolute top-1  right-4 rounded-lg bg-yellow-700 px-4  py-2 text-sm font-medium text-white hover:bg-yellow-800 focus:outline-none focus:ring-yellow-300 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800"
           >
             Search
           </button>
