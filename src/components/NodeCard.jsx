@@ -107,7 +107,7 @@ export function NodeCard({ nodeContent, key }) {
             <TextTitle />
             <p className="text-left text-lg tracking-tight">
               {nodeContent['texts'].map((text) => (
-                <p>{text}</p>
+                <p key={text}>{text}</p>
               ))}
             </p>
           </blockquote>
@@ -116,6 +116,7 @@ export function NodeCard({ nodeContent, key }) {
               <ResTitle count={nodeContent['links'].length} />
               {nodeContent['links'].map((link) => (
                 <a
+                  key={link['text']}
                   // href={link['href']}
                   // target="_blank"
                   onClick={() => setPageUrl(link['href'])}
