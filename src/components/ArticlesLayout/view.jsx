@@ -33,8 +33,10 @@ export function View({
   nodeId,
   setNodeId,
   nodeContent,
+  loading,
 }) {
   const [show, setShow] = useState(false)
+  console.log('laoding', loading)
   return (
     <section
       // id="testimonials"
@@ -61,14 +63,14 @@ export function View({
           </span>
         </h1>
         <p className="mx-auto mt-6 mb-2 max-w-4xl text-2xl  text-slate-700 dark:text-slate-400">
-          Companies landing pages are complex to navigate and full of glassy
-          CSS.{' '}
+          Companies' landing pages are complex to navigate and full of glassy
+          CSS.
           <span className="font-bold text-black dark:text-white">
-            Unfortunaly there is no one template to structure their textual
+            Unfortunately, there is no one template to structure their textual
             data.
           </span>{' '}
-          this is why we tend to scrap evrything and make sense of it after
-          using complex nlp algorithms.{'  '}
+          this is why we tend to scrap everything and make sense of it after
+          using complex NLP algorithms.{'  '}
           {!show && (
             <span
               onClick={() => setShow(!show)}
@@ -82,18 +84,18 @@ export function View({
           <>
             <p className="mx-auto mt-1 mb-2 max-w-4xl text-2xl  text-slate-700 dark:text-slate-400">
               But wait! why does it look structured and organized when we look
-              at it ? This is because of the HTML layout that give textual data
-              a struture. Given this asumption i developped a simple algorthl
-              that process a give hopelage html cleans it from irrelavant
-              elements and transform it into graph. doing so we can identify
+              at it? This is because of the HTML layout that gives textual data
+              a structure. Given this assumption, I developed a simple algorithm
+              that processes a given homepage HTML cleans it from irrelevant
+              elements, and transform it into a graph. doing so we can identify
               relevant elements using graph centralities and cluster related
               items.{' '}
             </p>
             <p className="mx-auto mt-1 mb-2 max-w-4xl text-2xl  text-slate-700 dark:text-slate-400">
               Doing so, textual snippets are linked to their title, links also
-              linked to theri scope and more ... Moreover we push this idea to
-              utilise not only the graph but also rich objects found in links
-              head to enrich internal links with usefull metadata.{' '}
+              linked to their scope, and more ... Moreover we push this idea to
+              utilize not only the graph but also rich objects found in the
+              links head to enrich internal links with useful metadata.{' '}
               {show && (
                 <span
                   onClick={() => setShow(!show)}
@@ -109,37 +111,30 @@ export function View({
         <div className=" z-10 mt-10 flex justify-center gap-x-6">
           <SearchNew setSkillId={setSkillId} skillId={skillId} />
         </div>
-        {articleCount != 0 && (
+        {items.length != 0 && (
           <p className="mt-10 text-2xl ">
             {articleCount} relevant {articleCount == 1 ? 'Item' : 'Items'} found
             for <span className="font-bold">{getDomain(skillId)}</span>
           </p>
         )}
-        {loading_node ? (
+        {items.length == 0 ? (
           <div className=" mt-10  flex items-center justify-center ">
-            <ul
-              role="list"
-              className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 text-left sm:gap-8 lg:mt-20 lg:max-w-none lg:grid-cols-3"
-            >
-              {[
-                [1, 2, 3],
-                [4, 5, 6],
-                [7, 8, 9],
-              ].map((column, columnIndex) => (
-                <li key={columnIndex}>
-                  <ul role="list" className="flex flex-col gap-y-6 sm:gap-y-8">
-                    {column.map((article, articleIndex) => (
-                      <ArticleCardSkeleton key={articleIndex} />
-                    ))}
-                  </ul>
-                </li>
+            <ul role="list" className=" mt-5 ">
+              {[...Array(15).keys()].map((item) => (
+                <span
+                  key={item}
+                  // onClick={() => setNodeId(item.id)}
+                  className={`m-1 inline-flex  transform   animate-pulse cursor-pointer items-center rounded-full bg-white px-4  py-0.5  text-xl  font-bold text-slate-900  duration-100 ease-in-out  hover:scale-105  dark:bg-slate-900 dark:text-white `}
+                >
+                  <div className="m-2 h-2.5 w-20  rounded-sm  bg-gray-200 dark:bg-gray-700"></div>
+                </span>
               ))}
             </ul>
           </div>
         ) : (
           <ul role="list" className=" mt-5 ">
             {items.map((item) => {
-              if (item.label.length > 3) {
+              if (item.label.length >= 3) {
                 return (
                   <span
                     onClick={() => setNodeId(item.id)}

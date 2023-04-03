@@ -23,7 +23,7 @@ export function SearchNew({ setSkillId, skillId }) {
 
   return (
     <div className=" mx-auto w-full transform divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-xl bg-white py-1 text-left shadow-2xl ring-4 ring-yellow-600 ring-opacity-50   dark:divide-slate-900 dark:bg-slate-900   lg:w-3/4">
-      <Combobox onChange={(item) => (window.location = item.url)}>
+      <Combobox>
         <div className="relative">
           <MagnifyingGlassIcon
             className="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-gray-400"

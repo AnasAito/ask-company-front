@@ -33,6 +33,7 @@ export function ArticlesLayout() {
   const [nodeId, setNodeId] = useState(null)
   const [nodeContent, setNodeContent] = useState([])
   const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (skillId) {
@@ -50,13 +51,16 @@ export function ArticlesLayout() {
   useEffect(() => {
     if (nodeId) {
       let mounted = true
-
+      // console.log('laoding ')
+      setLoading(true)
       getItem(skillId, nodeId).then((items) => {
         if (mounted) {
           setNodeContent(items.payload)
-          console.log(items)
+          // console.log(items)
+          // setLoading(false)
         }
       })
+
       return () => (mounted = false)
     }
   }, [nodeId])
@@ -73,6 +77,7 @@ export function ArticlesLayout() {
         skillId={skillId}
         articleCount={items.length}
         SkillName={'SkillName'}
+        loading={loading}
       />
       {/* <div>test</div> */}
     </>
