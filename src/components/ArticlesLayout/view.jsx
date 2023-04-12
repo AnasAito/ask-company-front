@@ -140,7 +140,7 @@ export function View({
           <div>
             {['grid', 'link_list', 'paragraph'].map((category) => (
               <>
-                <p className="mt-4 text-left text-lg">
+                <p className="mt-4 text-left text-lg" key={category}>
                   {category.toUpperCase()}
                 </p>
                 <ul role="list" className=" mt-5 ">
@@ -150,6 +150,7 @@ export function View({
                       // if (item.label.length >= 3) {
                       return (
                         <span
+                          key={item.id}
                           onClick={() => setNodeId(item.id)}
                           className={` ${
                             item.is_spetial ? 'border-2' : ''
