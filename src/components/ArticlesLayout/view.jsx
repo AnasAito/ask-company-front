@@ -23,6 +23,11 @@ const getDomain = (url, subdomain = null) => {
 
   return url
 }
+const bg_mapper = {
+  grid: 'bg-yellow-700',
+  link_list: 'bg-red-700',
+  paragraph: 'bg-green-700',
+}
 export function View({
   items,
   loading_node,
@@ -114,7 +119,7 @@ export function View({
         {items.length != 0 && (
           <p className="mt-10 text-2xl ">
             {articleCount} relevant {articleCount == 1 ? 'Item' : 'Items'} found
-            for <span className="font-bold">{getDomain(skillId)}</span>
+            for <span className="font-bold">{skillId}</span>
           </p>
         )}
         {items.length == 0 ? (
@@ -132,28 +137,41 @@ export function View({
             </ul>
           </div>
         ) : (
-          <ul role="list" className=" mt-5 ">
-            {items.map((item) => {
-              if (item.label.length >= 3) {
-                return (
-                  <span
-                    onClick={() => setNodeId(item.id)}
-                    className={`m-1 inline-flex transform  cursor-pointer items-center rounded-full text-xl  font-bold duration-100 ease-in-out hover:scale-105 ${
-                      item.id == nodeId
-                        ? 'bg-white text-yellow-700'
-                        : 'bg-yellow-700 text-white '
-                    } px-4 py-0.5 `}
-                  >
-                    {item.label}
-                  </span>
-                )
-              }
-            })}
-          </ul>
+          <div>
+            {['grid', 'link_list', 'paragraph'].map((category) => (
+              <>
+                <p className="mt-4 text-left text-lg">
+                  {category.toUpperCase()}
+                </p>
+                <ul role="list" className=" mt-5 ">
+                  {items
+                    .filter((item) => item.type == category)
+                    .map((item) => {
+                      // if (item.label.length >= 3) {
+                      return (
+                        <span
+                          onClick={() => setNodeId(item.id)}
+                          className={` ${
+                            item.is_spetial ? 'border-2' : ''
+                          } m-1 inline-flex transform  cursor-pointer items-center rounded-full text-xl  font-bold duration-100 ease-in-out hover:scale-105 ${
+                            item.id == nodeId
+                              ? 'bg-white text-yellow-700'
+                              : ` ${bg_mapper[item.type]} text-white `
+                          } px-4 py-0.5 `}
+                        >
+                          {item.label}
+                        </span>
+                      )
+                      // }
+                    })}
+                </ul>
+              </>
+            ))}
+          </div>
         )}
         <div className="mt-10">
           {nodeContent.length != 0 && (
-            <NodeCard nodeContent={nodeContent} key={1} />
+            <NodeCard nodeContent={nodeContent} key={1} homepageUrl={skillId} />
           )}
         </div>
       </Container>

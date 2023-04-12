@@ -60,26 +60,34 @@ const ResTitle = ({ count }) => (
     </div>
   </div>
 )
-export function NodeCard({ nodeContent, key }) {
+
+const fomrat_link = (homepageUrl, link) => {
+  if (link.includes('http')) {
+    return link
+  }
+  console.log(`${homepageUrl}${link}`)
+  return `${homepageUrl}${link}`
+}
+export function NodeCard({ nodeContent, key, homepageUrl }) {
   const [page_url, setPageUrl] = useState(null)
   const [pageMeta, setPageMeta] = useState(null)
   useEffect(() => {
     if (page_url) {
       let mounted = true
 
-      enrich(page_url).then((items) => {
+      enrich(fomrat_link(homepageUrl, page_url)).then((items) => {
         if (mounted) {
           // setPageMeta(items)
           const res = items
           if (res['enriched']) {
             setPageMeta({
-              href: page_url,
+              href: fomrat_link(homepageUrl, page_url),
               title: res['title'],
               description: res['description'],
             })
           } else {
             setPageMeta({
-              href: page_url,
+              href: fomrat_link(homepageUrl, page_url),
               title: null,
               description: null,
             })
@@ -105,18 +113,59 @@ export function NodeCard({ nodeContent, key }) {
           <blockquote className="relative">
             {/* <p className="mb-6 text-xl font-semibold ">title</p> */}
             <TextTitle />
-            <p className="text-left text-lg tracking-tight">
-              {nodeContent['texts'].map((text) => (
-                <p key={text}>{text}</p>
-              ))}
-            </p>
+            <div className="text-left text-lg tracking-tight">
+              {nodeContent['content'].map((item) => {
+                return (
+                  <>
+                    {item.type == 'atom' && <p key={item.id}>{item.payload}</p>}
+                    {item.type == 'grid' && (
+                      <div className="mt-4 grid grid-cols-2 gap-4">
+                        {item.payload.map((grid_item) => (
+                          <div className=" rounded-md bg-slate-600 p-4">
+                            {grid_item.payload
+                              .filter((atom) => atom.payload.length > 1)
+                              .map((atom) => (
+                                <p key={atom.payload} className="text-sm">
+                                  {atom.payload}
+                                </p>
+                              ))}
+                            <div className="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6 dark:border-slate-800"></div>
+                            {grid_item.links.map((link) => (
+                              <a
+                                key={link['href']}
+                                // href={link['href']}
+                                // target="_blank"
+                                onClick={() => setPageUrl(link['href'])}
+                                className="transform cursor-pointer ease-in-out hover:scale-110"
+                                // className="m-1 inline-flex  transform cursor-pointer items-center  rounded-full bg-yellow-700 px-4 py-0.5  text-xl font-bold text-white duration-100  ease-in-out hover:scale-105 "
+                              >
+                                <span className=" m-1 inline-flex items-center rounded-md bg-indigo-100 px-3 py-0.5 text-sm font-medium text-indigo-800 dark:bg-yellow-700 dark:text-white">
+                                  <svg
+                                    className="-ml-0.5 mr-1.5 h-2 w-2 text-indigo-400 dark:text-yellow-100"
+                                    fill="currentColor"
+                                    viewBox="0 0 8 8"
+                                  >
+                                    <circle cx={4} cy={4} r={3} />
+                                  </svg>
+                                  {link['href']}
+                                </span>
+                              </a>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                )
+              })}
+            </div>
           </blockquote>
           <figcaption className="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6 dark:border-slate-800">
             <div className=" text-lg tracking-tight ">
               <ResTitle count={nodeContent['links'].length} />
               {nodeContent['links'].map((link) => (
                 <a
-                  key={link['text']}
+                  key={link['href']}
                   // href={link['href']}
                   // target="_blank"
                   onClick={() => setPageUrl(link['href'])}
@@ -131,7 +180,9 @@ export function NodeCard({ nodeContent, key }) {
                     >
                       <circle cx={4} cy={4} r={3} />
                     </svg>
-                    {link['text']}
+                    {link['text_payload'].length > 0
+                      ? link['text_payload'][0]
+                      : link['href']}
                   </span>
                 </a>
               ))}
