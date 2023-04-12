@@ -126,7 +126,7 @@ export function NodeCard({ nodeContent, key, homepageUrl }) {
                         {item.payload.map((grid_item) => (
                           <div
                             className=" rounded-md bg-slate-600 p-4"
-                            key={grid_item}
+                            key={grid_item.id}
                           >
                             {grid_item.payload
                               .filter((atom) => atom.payload.length > 1)
@@ -187,7 +187,12 @@ export function NodeCard({ nodeContent, key, homepageUrl }) {
                       <circle cx={4} cy={4} r={3} />
                     </svg>
                     {link['text_payload'].length > 0
-                      ? link['text_payload'][0]
+                      ? link['text_payload'].sort(function (a, b) {
+                          return (
+                            a.length - b.length || // sort by length, if equal then
+                            a.localeCompare(b)
+                          ) // sort by dictionary order
+                        })[0]
                       : link['href']}
                   </span>
                 </a>
