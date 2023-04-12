@@ -119,9 +119,15 @@ export function NodeCard({ nodeContent, key, homepageUrl }) {
                   <>
                     {item.type == 'atom' && <p key={item.id}>{item.payload}</p>}
                     {item.type == 'grid' && (
-                      <div className="mt-4 grid grid-cols-2 gap-4">
+                      <div
+                        className="mt-4 grid grid-cols-2 gap-4"
+                        key={item.id}
+                      >
                         {item.payload.map((grid_item) => (
-                          <div className=" rounded-md bg-slate-600 p-4">
+                          <div
+                            className=" rounded-md bg-slate-600 p-4"
+                            key={grid_item}
+                          >
                             {grid_item.payload
                               .filter((atom) => atom.payload.length > 1)
                               .map((atom) => (
