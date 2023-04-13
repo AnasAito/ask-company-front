@@ -68,39 +68,74 @@ const fomrat_link = (homepageUrl, link) => {
   console.log(`${homepageUrl}${link}`)
   return `${homepageUrl}${link}`
 }
-export function NodeCard({ nodeContent, key, homepageUrl }) {
+function containsObject(obj, list) {
+  var i
+  for (i = 0; i < list.length; i++) {
+    if (list[i] === obj) {
+      return true
+    }
+  }
+
+  return false
+}
+export function NodeCard({
+  nodeContent,
+  key,
+  homepageUrl,
+  setSnippets,
+  snippets,
+}) {
   const [page_url, setPageUrl] = useState(null)
   const [pageMeta, setPageMeta] = useState(null)
+
   useEffect(() => {
     if (page_url) {
       let mounted = true
 
-      enrich(fomrat_link(homepageUrl, page_url)).then((items) => {
-        if (mounted) {
-          // setPageMeta(items)
-          const res = items
-          if (res['enriched']) {
-            setPageMeta({
-              href: fomrat_link(homepageUrl, page_url),
-              title: res['title'],
-              description: res['description'],
-            })
-          } else {
-            setPageMeta({
-              href: fomrat_link(homepageUrl, page_url),
-              title: null,
-              description: null,
-            })
+      enrich(fomrat_link(homepageUrl, page_url))
+        .then((items) => {
+          if (mounted) {
+            // setPageMeta(items)
+            const res = items
+            if (res['enriched']) {
+              let obj = {
+                href: fomrat_link(homepageUrl, page_url),
+                title: res['title'],
+                description: res['description'],
+              }
+              if (containsObject(obj, snippets)) {
+              } else {
+                setSnippets((oldArray) => [
+                  {
+                    href: fomrat_link(homepageUrl, page_url),
+                    title: res['title'],
+                    description: res['description'],
+                  },
+                  ...oldArray,
+                ])
+              }
+
+              // setSnippets()
+            }
+            // else {
+            //   setPageMeta({
+            //     href: fomrat_link(homepageUrl, page_url),
+            //     title: null,
+            //     description: null,
+            //   })
+            // }
+            console.log(pageMeta)
           }
-          console.log(pageMeta)
-        }
-      })
+        })
+        .catch((error) => {
+          alert(error.message)
+        })
       return () => (mounted = false)
     }
   }, [page_url])
   return (
     <>
-      <Modal pageMeta={pageMeta} setPageMeta={setPageMeta} />
+      {/* <Modal pageMeta={pageMeta} setPageMeta={setPageMeta} /> */}
       <div
         key={key}
         // href={''}
@@ -110,63 +145,8 @@ export function NodeCard({ nodeContent, key, homepageUrl }) {
       >
         <figure className="relative rounded-2xl  bg-white p-6 text-slate-900 shadow-xl shadow-slate-900/10 dark:bg-slate-900 dark:text-white">
           {/* <QuoteIcon className="absolute top-6 left-6 fill-slate-100 dark:fill-slate-800" /> */}
-          <blockquote className="relative">
-            {/* <p className="mb-6 text-xl font-semibold ">title</p> */}
-            <TextTitle />
-            <div className="text-left text-lg tracking-tight">
-              {nodeContent['content'].map((item) => {
-                return (
-                  <>
-                    {item.type == 'atom' && <p key={item.id}>{item.payload}</p>}
-                    {item.type == 'grid' && (
-                      <div
-                        className="mt-4 grid grid-cols-2 gap-4"
-                        key={item.id}
-                      >
-                        {item.payload.map((grid_item) => (
-                          <div
-                            className=" rounded-md bg-slate-600 p-4"
-                            key={grid_item.id}
-                          >
-                            {grid_item.payload
-                              .filter((atom) => atom.payload.length > 1)
-                              .map((atom) => (
-                                <p key={atom.payload} className="text-sm">
-                                  {atom.payload}
-                                </p>
-                              ))}
-                            <div className="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6 dark:border-slate-800"></div>
-                            {grid_item.links.map((link) => (
-                              <a
-                                key={link['href']}
-                                // href={link['href']}
-                                // target="_blank"
-                                onClick={() => setPageUrl(link['href'])}
-                                className="transform cursor-pointer ease-in-out hover:scale-110"
-                                // className="m-1 inline-flex  transform cursor-pointer items-center  rounded-full bg-yellow-700 px-4 py-0.5  text-xl font-bold text-white duration-100  ease-in-out hover:scale-105 "
-                              >
-                                <span className=" m-1 inline-flex items-center rounded-md bg-indigo-100 px-3 py-0.5 text-sm font-medium text-indigo-800 dark:bg-yellow-700 dark:text-white">
-                                  <svg
-                                    className="-ml-0.5 mr-1.5 h-2 w-2 text-indigo-400 dark:text-yellow-100"
-                                    fill="currentColor"
-                                    viewBox="0 0 8 8"
-                                  >
-                                    <circle cx={4} cy={4} r={3} />
-                                  </svg>
-                                  {link['href']}
-                                </span>
-                              </a>
-                            ))}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </>
-                )
-              })}
-            </div>
-          </blockquote>
-          <figcaption className="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6 dark:border-slate-800">
+
+          <figcaption className="relative  flex items-center justify-between  border-slate-100 pt-6 dark:border-slate-800">
             <div className=" text-lg tracking-tight ">
               <ResTitle count={nodeContent['links'].length} />
               {nodeContent['links'].map((link) => (

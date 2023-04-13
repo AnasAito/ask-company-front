@@ -40,6 +40,15 @@ const is_spetial = (label) => {
     label.includes('user')
   )
 }
+const filtred_labels = [
+  'services',
+  'machines',
+  'innovations',
+  // 'scrubbers',
+  'services',
+
+  'parts',
+]
 const format_items = (items) => {
   console.log(items)
   let grids = items.grids
@@ -64,7 +73,10 @@ const format_items = (items) => {
   for (let item of link_lists) {
     let item_id = item[0]
     let item_meta = item[1]
-    if (item_meta['label'].split(' ').length <= 10) {
+    if (
+      (item_meta['label'].split(' ').length <= 10) &
+      filtred_labels.includes(item_meta['label'].toLowerCase())
+    ) {
       items_formated.push({
         id: item_id,
         label: item_meta['label'],

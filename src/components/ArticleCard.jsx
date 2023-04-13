@@ -2,6 +2,7 @@ import Image from 'next/future/image'
 import Queries from '../api/queries/index'
 import { get } from 'lodash'
 import empty from '@/images/logos/empty.png'
+import { useState, useEffect } from 'react'
 const logo_mapper = Queries['logo.get.many']
 function QuoteIcon(props) {
   return (
@@ -24,51 +25,87 @@ const render_occurence = (content, skill) => {
     </>
   )
 }
+const sleep = (milliseconds) => {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds))
+}
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 export function ArticleCard({ article, key }) {
   const defaultCompany = {
     logo: empty,
     name: '',
   }
+  const [show, setShow] = useState(false)
+  const [keywords, setKeywords] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await delay(4000)
+      setKeywords([
+        { label: article.title.split('|')[0], id: article.title.split('|')[0] },
+      ])
+    }
+    // setKeywords([{ label: 'machines', id: 'test' }])
+    // call the function
+    fetchData()
+      // make sure to catch any error
+      .catch(console.error)
+  }, [show])
+
   return (
     <>
-      <a
+      <div
         key={key}
-        href={article.article_id}
-        target="_blank"
-        rel="noreferrer"
-        className="transform cursor-pointer  transition duration-500 ease-in-out hover:scale-105"
+        onClick={() => setShow(true)}
+        className="transform cursor-pointer  text-left transition duration-500 ease-in-out hover:scale-105"
       >
-        <figure className="relative rounded-2xl  p-6 shadow-xl shadow-slate-900/10 text-slate-900 dark:text-white bg-white dark:bg-slate-900">
-          <QuoteIcon className="absolute top-6 left-6 fill-slate-100 dark:fill-slate-800" />
+        <figure className="relative rounded-2xl  bg-white p-6 text-slate-900 shadow-xl shadow-slate-900/10 dark:bg-slate-900 dark:text-white">
+          {/* <QuoteIcon className="absolute top-6 left-6 fill-slate-100 dark:fill-slate-800" /> */}
           <blockquote className="relative">
             <p className="mb-6 text-xl font-semibold ">
-              {article.article_title}
+              {article.title.split('|')[0]}
             </p>
             <p className="text-lg tracking-tight ">
-              ... {render_occurence(article.occurence_text, article.skill)} ...
+              ... {render_occurence(article.description, null)} ...
             </p>
           </blockquote>
-          <figcaption className="relative mt-6 flex items-center justify-between border-t border-slate-100 dark:border-slate-800 pt-6">
-            <div>
-              <div className="font-display text-base ">
-                {get(logo_mapper, article.company_id, defaultCompany).name}
+          {show && (
+            <figcaption className="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6 dark:border-slate-800">
+              <div>
+                {keywords.length == 0 ? (
+                  <ul role="list" className="  ">
+                    {[...Array(4).keys()].map((item) => (
+                      <span
+                        key={item}
+                        // onClick={() => setNodeId(item.id)}
+                        className={` inline-flex transform animate-pulse   cursor-pointer items-center gap-1 rounded-full bg-white px-4  py-0.5  text-xl  font-bold text-slate-900  duration-100 ease-in-out  hover:scale-105  dark:bg-slate-900 dark:text-white `}
+                      >
+                        <div className="   h-5  w-32 rounded-lg bg-gray-200 dark:bg-gray-700"></div>
+                      </span>
+                    ))}
+                  </ul>
+                ) : (
+                  <ul role="list" className="  ">
+                    {keywords.map((keyword) => {
+                      // if (item.label.length >= 3) {
+                      return (
+                        <span
+                          key={keyword.id}
+                          // onClick={() => setNodeId(item.id)}
+                          className={`  m-1 inline-flex transform  cursor-pointer items-center rounded-full bg-white  px-4 py-0.5  font-bold 
+                            text-yellow-700 duration-100 ease-in-out hover:scale-105 `}
+                        >
+                          {keyword.label}
+                        </span>
+                      )
+                      // }
+                    })}
+                  </ul>
+                )}
               </div>
-              <div className="mt-1 text-sm ">
-                {article.article_date == '' ? '2022' : article.article_date}
-              </div>
-            </div>
-            <div className="overflow-hidden rounded-full bg-slate-50 dark:bg-slate-900">
-              <Image
-                className="h-14 w-14 object-cover"
-                src={get(logo_mapper, article.company_id, defaultCompany).logo}
-                alt=""
-                width={56}
-                height={56}
-              />
-            </div>
-          </figcaption>
+            </figcaption>
+          )}
         </figure>
-      </a>
+      </div>
     </>
   )
 }
