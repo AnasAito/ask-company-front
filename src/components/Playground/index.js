@@ -40,7 +40,7 @@ const prepare_cards = (articles) => {
   }
 }
 
-export function Playground({ openPanel, setOpenPanel }) {
+export function Playground({ openPanel, setOpenPanel, setStrategy }) {
   const [snippets, setSnippets] = useState([
     {
       id: 'test',
@@ -56,6 +56,12 @@ export function Playground({ openPanel, setOpenPanel }) {
         'Services that help customers effectively manage their waste and keep their facilities clean e.g., hazardous waste management',
       keywords: [],
     },
+    {
+      id: 'test_c',
+
+      description: 'the company is using Milvus as their vector database',
+      keywords: [],
+    },
   ])
 
   // console.log('cards to render', prepare_cards(snippets))
@@ -66,6 +72,7 @@ export function Playground({ openPanel, setOpenPanel }) {
       snippets={snippets}
       openPanel={openPanel}
       setOpenPanel={setOpenPanel}
+      setStrategy={setStrategy}
     />
   )
 }

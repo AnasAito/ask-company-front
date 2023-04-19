@@ -95,7 +95,7 @@ function MobileNavigation() {
   )
 }
 
-export function Header({ openPanel, setOpenPanel }) {
+export function Header({ openPanel, setOpenPanel, strategy }) {
   return (
     <header className="bg-slate-50 py-4 font-mono text-white dark:bg-slate-800 dark:text-white">
       <Container>
@@ -122,6 +122,27 @@ export function Header({ openPanel, setOpenPanel }) {
                 <span className="inline">Add context</span>
               </span>
             </Button>
+            <button
+              type="button"
+              aria-label="Toggle dark mode"
+              className="group rounded-full bg-white/90 px-2 py-2 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur transition dark:bg-slate-800/90 dark:ring-white/10 dark:hover:ring-white/20"
+              onClick={() => alert(JSON.stringify(strategy))}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="h-6 w-6 text-gray-500"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+                />
+              </svg>
+            </button>
             <div className="hidden lg:inline">
               <ModeToggle />
             </div>

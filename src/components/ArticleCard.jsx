@@ -42,6 +42,7 @@ export function ArticleCard({
   setSnippets,
   snippets,
   description,
+  setPageMeta,
 }) {
   const defaultCompany = {
     logo: empty,
@@ -185,7 +186,17 @@ export function ArticleCard({
                       return (
                         <span
                           key={keyword.id}
-                          // onClick={() => setNodeId(item.id)}
+                          onClick={() =>
+                            setPageMeta({
+                              label: keyword.label,
+                              context: article.description,
+                              alts: [
+                                // 'alternative',
+                                // 'alt_b',
+                                // 'alternative test',
+                              ],
+                            })
+                          }
                           className={`  m-1 inline-flex transform  cursor-pointer items-center rounded-full ${
                             keyword.type ? 'bg-slate-400' : 'bg-white'
                           }  px-4 py-0.5  font-bold 

@@ -3,6 +3,7 @@ import { Container } from '../Container'
 import { ArticleCard } from '../ArticleCard'
 import { SnippetAdd } from '../SnippetAdd'
 import { Panel } from '../Panel'
+import { Modal } from '../Modal'
 
 export function View({
   snippets,
@@ -10,13 +11,20 @@ export function View({
   snippets_to_render,
   openPanel,
   setOpenPanel,
+  setStrategy,
   // description,
   // setDescription,
 }) {
   // console.log('snippets_to_render', snippets, snippets_to_render)
   const [description, setDescription] = useState(null)
+  const [pageMeta, setPageMeta] = useState(null)
   return (
     <section className="  bg-slate-50 font-mono text-slate-900 dark:bg-slate-800 dark:text-white">
+      <Modal
+        pageMeta={pageMeta}
+        setPageMeta={setPageMeta}
+        setStrategy={setStrategy}
+      />
       <Panel
         open={openPanel}
         setOpen={setOpenPanel}
@@ -68,6 +76,7 @@ export function View({
                                 article={snippet}
                                 setSnippets={setSnippets}
                                 snippets={snippets}
+                                setPageMeta={setPageMeta}
                               />
                             )}
                           </>
