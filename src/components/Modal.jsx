@@ -72,10 +72,13 @@ export default function Modal({ pageMeta, setPageMeta }) {
                               .reduce((x, y) => x + y, 0)
 
                             return (
-                              <div class="animate__animated animate__fadeIn flex items-start justify-between font-mono text-xs leading-none">
-                                <div class="flex-1">
+                              <div
+                                key={concept.keyword}
+                                className="animate__animated animate__fadeIn flex items-start justify-between font-mono text-xs leading-none"
+                              >
+                                <div className="flex-1">
                                   <div
-                                    class="mb-1 h-1 rounded bg-gradient-to-r from-blue-400 to-blue-200"
+                                    className="mb-1 h-1 rounded bg-gradient-to-r from-blue-400 to-blue-200"
                                     style={{
                                       width: `${parseInt(
                                         (concept.count / max_) * 100
@@ -84,7 +87,7 @@ export default function Modal({ pageMeta, setPageMeta }) {
                                   ></div>{' '}
                                   <p className="text-left">{concept.keyword}</p>
                                 </div>{' '}
-                                <p class="pl-2">
+                                <p className="pl-2">
                                   {Math.round((concept.count / max_) * 100)} %
                                 </p>{' '}
                               </div>
