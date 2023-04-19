@@ -95,7 +95,7 @@ function MobileNavigation() {
   )
 }
 
-export function Header() {
+export function Header({ openPanel, setOpenPanel }) {
   return (
     <header className="bg-slate-50 py-4 font-mono text-white dark:bg-slate-800 dark:text-white">
       <Container>
@@ -111,14 +111,15 @@ export function Header() {
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <Button
-              href="https://github.com/sponsors/AnasAito"
-              target="_blank"
-              rel="noreferrer"
+              // href="https://github.com/sponsors/AnasAito"
+              // target="_blank"
+              // rel="noreferrer"
+              onClick={() => setOpenPanel(true)}
               color="yellow"
             >
               <span>
                 {/* <span className="hidden lg:inline"> Keep the App running!</span> */}
-                <span className="inline"> Sponsor me!</span>
+                <span className="inline">Add context</span>
               </span>
             </Button>
             <div className="hidden lg:inline">
