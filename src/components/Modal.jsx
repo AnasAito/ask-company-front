@@ -116,9 +116,11 @@ export function Modal({ pageMeta, setPageMeta, setStrategy }) {
                                 )
                               }
                               className={`  m-1 inline-flex transform  cursor-pointer items-center rounded-full ${
-                                keyword.disable ? 'bg-slate-400' : 'bg-white'
+                                keyword.disable
+                                  ? 'bg-slate-400 line-through decoration-4'
+                                  : 'bg-white'
                               }  px-4 py-0.5  font-bold 
-                            text-yellow-700 duration-100 ease-in-out hover:scale-105 `}
+                            text-yellow-700  duration-100 ease-in-out hover:scale-105`}
                             >
                               {keyword.label}
                             </span>
