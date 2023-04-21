@@ -7,6 +7,7 @@ import {
   InMemoryCache,
   HttpLink,
 } from '@apollo/client'
+import Script from 'next/script'
 
 const createApolloClient = (authToken) => {
   return new ApolloClient({
@@ -25,6 +26,7 @@ export default function App({ Component, pageProps }) {
   )
   return (
     <ApolloProvider client={client}>
+      <Script src="https://cdn.jsdelivr.net/npm/fyu/fyu.min.js" />
       <Component {...pageProps} />
       <Analytics />
     </ApolloProvider>

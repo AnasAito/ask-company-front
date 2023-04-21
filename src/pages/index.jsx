@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { Footer } from '@/components/Footer'
 import { Playground } from '@/components/Playground'
@@ -10,6 +10,15 @@ export default function Home() {
   // )
   const [openPanel, setOpenPanel] = useState(false)
   const [strategy, setStrategy] = useState([])
+  // useEffect(() => {
+  //   // use script loaded
+  //   // fetch('https://cdn.jsdelivr.net/npm/fyu/fyu.min.js')
+  //   //   .then((res) => res.text())
+  //   //   .then((script) => {
+  //   //     makeItHell()
+  //   //   })
+  //   // console.log(window.fyu)
+  // }, [])
   return (
     <div className="flex min-h-screen flex-col  justify-between bg-slate-50 dark:bg-slate-800 ">
       <Head>
